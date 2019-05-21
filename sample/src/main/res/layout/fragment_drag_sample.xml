@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.github.lcdsmao.springsample.DragSampleViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/image_circle_3"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/circle_vertical_gap_2"
+            android:src="@drawable/ic_android"
+            android:tint="@color/green_3"
+            app:layout_constraintBottom_toBottomOf="@id/image_circle_1"
+            app:layout_constraintEnd_toEndOf="@id/image_circle_1"
+            app:layout_constraintStart_toStartOf="@id/image_circle_1"
+            app:layout_constraintTop_toTopOf="@id/image_circle_1"
+            />
+
+        <ImageView
+            android:id="@+id/image_circle_2"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/circle_vertical_gap_1"
+            android:src="@drawable/ic_android"
+            android:tint="@color/green_2"
+            app:layout_constraintBottom_toBottomOf="@id/image_circle_1"
+            app:layout_constraintEnd_toEndOf="@id/image_circle_1"
+            app:layout_constraintStart_toStartOf="@id/image_circle_1"
+            app:layout_constraintTop_toTopOf="@id/image_circle_1"
+            />
+
+        <ImageView
+            android:id="@+id/image_circle_1"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_android"
+            android:tint="@color/green_1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.3"
+            />
+
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flow_control"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:constraint_referenced_ids="text_damping,seek_damping,text_stiffness,seek_stiffness"
+            app:flow_horizontalGap="4dp"
+            app:flow_maxElementsWrap="2"
+            app:flow_wrapMode="aligned"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/text_damping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="@{@string/damping_ratio_format(viewModel.dampingRatio)}"
+            app:layout_constraintHorizontal_bias="0"
+            tools:ignore="MissingConstraints"
+            />
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/seek_damping"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:progress="@{viewModel.dampingProgress}"
+            app:onProgressChanged="@{(progress) -> viewModel.setDampingProgress(progress)}"
+            tools:ignore="MissingConstraints"
+            />
+
+        <TextView
+            android:id="@+id/text_stiffness"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="@{@string/stiffness_format(viewModel.stiffness)}"
+            app:layout_constraintHorizontal_bias="0"
+            tools:ignore="MissingConstraints"
+            />
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/seek_stiffness"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:progress="@{viewModel.stiffnessProgress}"
+            app:onProgressChanged="@{(progress) -> viewModel.setStiffnessProgress(progress)}"
+            tools:ignore="MissingConstraints"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

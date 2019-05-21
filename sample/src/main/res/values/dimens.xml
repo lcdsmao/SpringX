@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="circle_vertical_gap_1">144dp</dimen>
+    <dimen name="circle_vertical_gap_2">288dp</dimen>
+</resources>

@@ -4,6 +4,7 @@ buildscript {
     ext {
         kotlin_version = '1.3.31'
         dynamicanimation_version = '1.0.0'
+        navigation_version = '2.1.0-alpha04'
     }
     repositories {
         google()

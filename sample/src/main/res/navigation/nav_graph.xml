@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dragSampleFragment">
+
+    <fragment
+        android:id="@+id/dragSampleFragment"
+        android:name="com.github.lcdsmao.springsample.DragSampleFragment"
+        android:label="DragSampleFragment" />
+    <fragment
+        android:id="@+id/simpleSampleFragment"
+        android:name="com.github.lcdsmao.springsample.SimpleSampleFragment"
+        android:label="SimpleSampleFragment" />
+</navigation>
