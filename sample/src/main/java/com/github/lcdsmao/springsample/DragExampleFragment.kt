@@ -2,13 +2,11 @@ package com.github.lcdsmao.springsample
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.github.lcdsmao.spring.spring
+import com.github.lcdsmao.springx.spring
 import com.github.lcdsmao.springsample.databinding.FragmentDragExampleBinding
 
 class DragExampleFragment : Fragment(R.layout.fragment_drag_example) {

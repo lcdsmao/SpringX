@@ -1,4 +1,4 @@
-package com.github.lcdsmao.spring;
+package com.github.lcdsmao.springx;
 
 import org.junit.Test;
 

@@ -3,7 +3,7 @@ package com.github.lcdsmao.springsample
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.github.lcdsmao.spring.spring
+import com.github.lcdsmao.springx.spring
 import com.github.lcdsmao.springsample.databinding.FragmentSimpleExampleBinding
 
 class SimpleExampleFragment : Fragment(R.layout.fragment_simple_example) {

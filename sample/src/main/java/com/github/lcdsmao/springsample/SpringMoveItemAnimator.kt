@@ -4,8 +4,8 @@ import android.view.View
 import androidx.dynamicanimation.animation.SpringForce
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
-import com.github.lcdsmao.spring.ViewPropertySpringAnimator
-import com.github.lcdsmao.spring.spring
+import com.github.lcdsmao.springx.ViewPropertySpringAnimator
+import com.github.lcdsmao.springx.spring
 
 class SpringMoveItemAnimator : SimpleItemAnimator() {
 
