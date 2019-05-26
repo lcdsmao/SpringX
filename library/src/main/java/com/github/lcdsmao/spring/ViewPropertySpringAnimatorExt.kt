@@ -1,18 +1,12 @@
 package com.github.lcdsmao.spring
 
 import android.view.View
-import androidx.dynamicanimation.animation.SpringForce
 
-fun View.spring(
-    defaultDampingRatio: Float = SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY,
-    defaultStiffness: Float = SpringForce.STIFFNESS_MEDIUM
-): ViewPropertySpringAnimator {
+fun View.spring(): ViewPropertySpringAnimator {
   var springAnimator = getTag(R.id.view_property_spring_animator_key) as? ViewPropertySpringAnimator
   if (springAnimator == null) {
     springAnimator = ViewPropertySpringAnimator(this)
     setTag(R.id.view_property_spring_animator_key, springAnimator)
   }
-  springAnimator.defaultDampingRatio = defaultDampingRatio
-  springAnimator.defaultStiffness = defaultStiffness
   return springAnimator
 }
