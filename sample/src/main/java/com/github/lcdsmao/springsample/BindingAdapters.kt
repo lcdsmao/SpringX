@@ -19,7 +19,7 @@ fun SeekBar.setProgressChangedListener(listener: OnProgressChangedListener) {
 }
 
 @BindingAdapter("progress")
-fun SeekBar.setProgressIfNotEquale(progress: Int) {
+fun SeekBar.setProgressIfNotEqual(progress: Int) {
   if (this.progress != progress) {
     this.progress = progress
   }

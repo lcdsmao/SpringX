@@ -2,14 +2,21 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/dragSampleFragment">
+    app:startDestination="@id/simpleExampleFragment">
 
     <fragment
-        android:id="@+id/dragSampleFragment"
-        android:name="com.github.lcdsmao.springsample.DragSampleFragment"
-        android:label="DragSampleFragment" />
+        android:id="@+id/simpleExampleFragment"
+        android:name="com.github.lcdsmao.springsample.SimpleExampleFragment"
+        android:label="@string/simple_example"
+        />
     <fragment
-        android:id="@+id/simpleSampleFragment"
-        android:name="com.github.lcdsmao.springsample.SimpleSampleFragment"
-        android:label="SimpleSampleFragment" />
+        android:id="@+id/dragExampleFragment"
+        android:name="com.github.lcdsmao.springsample.DragExampleFragment"
+        android:label="@string/drag_example"
+        />
+    <fragment
+        android:id="@+id/recyclerViewExampleFragment"
+        android:name="com.github.lcdsmao.springsample.RecyclerViewExampleFragment"
+        android:label="@string/recyclerview_example"
+        />
 </navigation>

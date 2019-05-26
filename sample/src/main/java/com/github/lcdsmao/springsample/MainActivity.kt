@@ -22,8 +22,9 @@ class MainActivity : AppCompatActivity() {
     setSupportActionBar(binding.toolbar)
     val appBarConfiguration = AppBarConfiguration(
       setOf(
-        R.id.dragSampleFragment,
-        R.id.simpleSampleFragment
+        R.id.dragExampleFragment,
+        R.id.simpleExampleFragment,
+        R.id.recyclerViewExampleFragment
       ),
       binding.drawerLayout
     )

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="velocity_translate_x" type="id" />
+    <item name="velocity_translate_y" type="id" />
+</resources>

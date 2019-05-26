@@ -2,4 +2,7 @@
     <string name="app_name">SpringAnimation</string>
     <string name="damping_ratio_format">Damping Ratio\n%.3f</string>
     <string name="stiffness_format">Stiffness\n%.2f</string>
+    <string name="simple_example">Simple Example</string>
+    <string name="drag_example">Drag Example</string>
+    <string name="recyclerview_example">RecyclerView Example</string>
 </resources>

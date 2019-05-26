@@ -9,12 +9,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.github.lcdsmao.spring.spring
-import com.github.lcdsmao.springsample.databinding.FragmentDragSampleBinding
+import com.github.lcdsmao.springsample.databinding.FragmentDragExampleBinding
 
-class DragSampleFragment : Fragment() {
+class DragExampleFragment : Fragment(R.layout.fragment_drag_example) {
 
   private val viewModel by viewModels<DragSampleViewModel>()
-  private lateinit var binding: FragmentDragSampleBinding
+  private lateinit var binding: FragmentDragExampleBinding
   private val onTouchListener = object : View.OnTouchListener {
 
     private var isDragging: Boolean = false
@@ -39,17 +39,23 @@ class DragSampleFragment : Fragment() {
             circle1.x = x
             circle1.y = y
 
-            circle2.spring(viewModel.dampingRatio.value!!, viewModel.stiffness.value!!)
+            circle2.spring()
+              .defaultDampingRatio(viewModel.dampingRatio.value!!)
+              .defaultStiffness(viewModel.stiffness.value!!)
               .translationX(circle1.translationX) {
-                doOnUpdate { _, value, _ ->
-                  circle3.spring(viewModel.dampingRatio.value!!, viewModel.stiffness.value!!)
+                onUpdate { _, value, _ ->
+                  circle3.spring()
+                    .defaultDampingRatio(viewModel.dampingRatio.value!!)
+                    .defaultStiffness(viewModel.stiffness.value!!)
                     .translationX(value)
                     .start()
                 }
               }
               .translationY(circle1.translationY) {
-                doOnUpdate { _, value, _ ->
-                  circle3.spring(viewModel.dampingRatio.value!!, viewModel.stiffness.value!!)
+                onUpdate { _, value, _ ->
+                  circle3.spring()
+                    .defaultDampingRatio(viewModel.dampingRatio.value!!)
+                    .defaultStiffness(viewModel.stiffness.value!!)
                     .translationY(value)
                     .start()
                 }
@@ -75,14 +81,10 @@ class DragSampleFragment : Fragment() {
     }
   }
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    binding = FragmentDragSampleBinding.inflate(inflater, container, false)
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    binding = FragmentDragExampleBinding.bind(view)
     binding.lifecycleOwner = viewLifecycleOwner
     binding.viewModel = viewModel
-    return binding.root
-  }
-
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.root.setOnTouchListener(onTouchListener)
   }
 }
