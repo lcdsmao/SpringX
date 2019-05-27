@@ -19,7 +19,7 @@
             app:flow_wrapMode="chain"
             app:flow_verticalGap="16dp"
             app:flow_maxElementsWrap="1"
-            app:constraint_referenced_ids="image_circle_1,image_circle_2,image_circle_3"
+            app:constraint_referenced_ids="image_1,image_2,image_3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -28,7 +28,7 @@
             />
 
         <ImageView
-            android:id="@+id/image_circle_1"
+            android:id="@+id/image_1"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/ic_android"
@@ -37,7 +37,7 @@
             />
 
         <ImageView
-            android:id="@+id/image_circle_2"
+            android:id="@+id/image_2"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginTop="@dimen/circle_vertical_gap_1"
@@ -47,7 +47,7 @@
             />
 
         <ImageView
-            android:id="@+id/image_circle_3"
+            android:id="@+id/image_3"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginTop="@dimen/circle_vertical_gap_2"

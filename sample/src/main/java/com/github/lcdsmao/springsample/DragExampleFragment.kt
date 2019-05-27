@@ -19,39 +19,39 @@ class DragExampleFragment : Fragment(R.layout.fragment_drag_example) {
     private val hitRect = Rect()
 
     override fun onTouch(v: View, event: MotionEvent): Boolean {
-      val circle1 = binding.imageCircle1
-      val circle2 = binding.imageCircle2
-      val circle3 = binding.imageCircle3
+      val image1 = binding.image1
+      val image2 = binding.image2
+      val image3 = binding.image3
       when (event.actionMasked) {
         MotionEvent.ACTION_DOWN -> {
-          circle1.getHitRect(hitRect)
+          image1.getHitRect(hitRect)
           if (hitRect.contains(event.x.toInt(), event.y.toInt())) {
             isDragging = true
           }
         }
         MotionEvent.ACTION_MOVE -> {
           if (isDragging) {
-            val x = event.x - circle1.width / 2
-            val y = event.y - circle1.width / 2
-            val isDraggingRight = x > circle1.x
-            circle1.x = x
-            circle1.y = y
+            val x = event.x - image1.width / 2
+            val y = event.y - image1.width / 2
+            val isDraggingRight = x > image1.x
+            image1.x = x
+            image1.y = y
 
-            circle2.spring()
+            image2.spring()
               .defaultDampingRatio(viewModel.dampingRatio.value!!)
               .defaultStiffness(viewModel.stiffness.value!!)
-              .translationX(circle1.translationX) {
+              .translationX(image1.translationX) {
                 onUpdate { _, value, _ ->
-                  circle3.spring()
+                  image3.spring()
                     .defaultDampingRatio(viewModel.dampingRatio.value!!)
                     .defaultStiffness(viewModel.stiffness.value!!)
                     .translationX(value)
                     .start()
                 }
               }
-              .translationY(circle1.translationY) {
+              .translationY(image1.translationY) {
                 onUpdate { _, value, _ ->
-                  circle3.spring()
+                  image3.spring()
                     .defaultDampingRatio(viewModel.dampingRatio.value!!)
                     .defaultStiffness(viewModel.stiffness.value!!)
                     .translationY(value)
