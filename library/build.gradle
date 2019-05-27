@@ -1,16 +1,19 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion compile_sdk_version
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion min_sdk_version
+        targetSdkVersion target_sdk_version
+        versionCode version_code
+        versionName version_name
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        archivesBaseName = "$archivesBaseName-$versionName"
     }
 
     buildTypes {
@@ -24,7 +27,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.core:core-ktx:1.0.2'
     api "androidx.dynamicanimation:dynamicanimation:$dynamicanimation_version"
@@ -32,4 +35,19 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+}
+
+repositories {
+    mavenCentral()
+}
+
+publish {
+    bintrayUser = project.hasProperty('bintrayUser') ? bintrayUser : ''
+    bintrayKey = project.hasProperty('bintrayKey') ? bintrayKey : ''
+    userOrg = 'lcdsmao'
+    groupId = 'com.github.lcdsmao'
+    artifactId = 'springx'
+    publishVersion = version_name
+    desc = 'Easier to use SpringAnimation'
+    website = 'https://github.com/lcdsmao/SpringX'
 }
