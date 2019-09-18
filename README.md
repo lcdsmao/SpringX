@@ -2,6 +2,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [ ![Download](https://api.bintray.com/packages/lcdsmao/maven/springx/images/download.svg) ](https://bintray.com/lcdsmao/maven/springx/_latestVersion)
+![CI](https://github.com/lcdsmao/SpringX/workflows/Android%20CI/badge.svg)
 
 SpringX is an Android library that allows developers to easily use [SpringAnimation](https://developer.android.com/reference/android/support/animation/SpringAnimation).
 
