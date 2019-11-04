@@ -4,7 +4,7 @@
 [ ![Download](https://api.bintray.com/packages/lcdsmao/maven/springx/images/download.svg) ](https://bintray.com/lcdsmao/maven/springx/_latestVersion)
 ![CI](https://github.com/lcdsmao/SpringX/workflows/Android%20CI/badge.svg)
 
-SpringX is an Android library that allows developers to easily use [SpringAnimation](https://developer.android.com/reference/android/support/animation/SpringAnimation).
+SpringX is an Android library that allows developers to easily use [SpringAnimation](https://developer.android.com/guide/topics/graphics/spring-animation).
 
 ## Demo
 
@@ -13,10 +13,20 @@ SpringX is an Android library that allows developers to easily use [SpringAnimat
 | <img src='./art/anim1.gif' width='256'> | <img src='./art/anim2.gif' width='256'> |
 
 
-## Installation
+## Setup
 
+Include the jcenter repository to your root `build.gradle` file:
+```gralde
+repositories {
+  jcenter()
+}
+```
+
+And then add dependency to your module `build.gradle`:
 ```gradle
-implementation 'com.github.lcdsmao:springx:0.0.1'
+dependencies {
+  implementation 'com.github.lcdsmao:springx:0.0.1'
+}
 ```
 
 ## Usage
@@ -41,7 +51,7 @@ spring
   .start()
 ```
 
-Complicated control are also allowed:
+Complicated controls are also allowed:
 
 ```kotlin
 spring
@@ -74,6 +84,10 @@ spring
 
 This library is inspired by the talk: [Motional Intelligence: Build Smarter Animations (Google I/O'19)
 ](https://youtu.be/f3Lm8iOr4mE?t=709)
+
+## Related Articles
+
+- [Motional Intelligence: Build smarter animations](https://medium.com/androiddevelopers/motional-intelligence-build-smarter-animations-821af4d5f8c0)
 
 ## Contributing
 
