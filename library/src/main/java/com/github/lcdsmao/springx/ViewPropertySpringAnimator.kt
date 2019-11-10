@@ -218,7 +218,7 @@ class ViewPropertySpringAnimator<T : View>(
     var anim = animatorMap[property]
     if (anim == null) {
       anim = SpringAnimation(view, property)
-      anim.createEndListener(property)
+      anim.cleanSelfOnEnd(property)
       animatorMap[property] = anim
     }
     val config = SpringAnimationConfig(finalValue).apply(configBuilder)
@@ -227,7 +227,7 @@ class ViewPropertySpringAnimator<T : View>(
     pendingAnimations += SpringAnimationHolder(anim, config)
   }
 
-  private fun SpringAnimation.createEndListener(
+  private fun SpringAnimation.cleanSelfOnEnd(
     property: FloatPropertyCompat<in T>
   ) {
     val listener = object : DynamicAnimation.OnAnimationEndListener {
