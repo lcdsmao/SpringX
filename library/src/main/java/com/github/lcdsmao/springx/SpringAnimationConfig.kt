@@ -10,8 +10,6 @@ class SpringAnimationConfig internal constructor(private var finalValue: Float) 
     val NOT_SET = Float.MAX_VALUE
   }
 
-  internal var finalValueBias: Float = 0f
-
   private var startValueIsSet: Boolean = false
   var startValue: Float = NOT_SET
     set(value) {
