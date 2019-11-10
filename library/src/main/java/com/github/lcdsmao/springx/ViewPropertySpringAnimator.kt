@@ -3,6 +3,7 @@ package com.github.lcdsmao.springx
 import android.view.View
 import androidx.annotation.MainThread
 import androidx.dynamicanimation.animation.DynamicAnimation
+import androidx.dynamicanimation.animation.FloatPropertyCompat
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
 
@@ -17,7 +18,7 @@ class ViewPropertySpringAnimator(
   }
 
   private val pendingAnimations = mutableListOf<SpringAnimationHolder>()
-  private val runningAnimations = mutableMapOf<DynamicAnimation.ViewProperty, SpringAnimation>()
+  private val runningAnimations = mutableMapOf<FloatPropertyCompat<View>, SpringAnimation>()
   val isRunning: Boolean
     get() = runningAnimations.isNotEmpty()
 
@@ -178,7 +179,7 @@ class ViewPropertySpringAnimator(
     animatePropertyBy(DynamicAnimation.ALPHA, finalValue, config)
 
   fun animateProperty(
-    property: DynamicAnimation.ViewProperty,
+    property: FloatPropertyCompat<View>,
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
   ) = apply {
@@ -186,7 +187,7 @@ class ViewPropertySpringAnimator(
   }
 
   fun animatePropertyBy(
-    property: DynamicAnimation.ViewProperty,
+    property: FloatPropertyCompat<View>,
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
   ) = apply {
@@ -194,7 +195,7 @@ class ViewPropertySpringAnimator(
   }
 
   private fun animateProperty(
-    property: DynamicAnimation.ViewProperty,
+    property: FloatPropertyCompat<View>,
     finalValue: Float,
     finalValueBias: Float,
     configBuilder: SpringAnimationConfig.() -> Unit = {}
@@ -213,7 +214,7 @@ class ViewPropertySpringAnimator(
   }
 
   private fun SpringAnimation.createEndListener(
-    property: DynamicAnimation.ViewProperty
+    property: FloatPropertyCompat<View>
   ) {
     val listener = object : DynamicAnimation.OnAnimationEndListener {
       override fun onAnimationEnd(
