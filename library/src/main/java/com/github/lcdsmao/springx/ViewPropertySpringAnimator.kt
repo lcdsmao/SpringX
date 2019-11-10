@@ -18,9 +18,9 @@ class ViewPropertySpringAnimator<T : View>(
   }
 
   private val pendingAnimations = mutableListOf<SpringAnimationHolder>()
-  private val runningAnimations = mutableMapOf<FloatPropertyCompat<in T>, SpringAnimation>()
+  private val animatorMap = mutableMapOf<FloatPropertyCompat<in T>, SpringAnimation>()
   val isRunning: Boolean
-    get() = runningAnimations.isNotEmpty()
+    get() = animatorMap.isEmpty()
 
   private var defaultDampingRatio: Float = SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY
   private var defaultStiffness: Float = SpringForce.STIFFNESS_MEDIUM
@@ -215,11 +215,11 @@ class ViewPropertySpringAnimator<T : View>(
     finalValue: Float,
     configBuilder: SpringAnimationConfig.() -> Unit = {}
   ) {
-    var anim = runningAnimations[property]
+    var anim = animatorMap[property]
     if (anim == null) {
       anim = SpringAnimation(view, property)
       anim.createEndListener(property)
-      runningAnimations[property] = anim
+      animatorMap[property] = anim
     }
     val config = SpringAnimationConfig(finalValue).apply(configBuilder)
     config.defaultDampingRatio = defaultDampingRatio
@@ -237,10 +237,10 @@ class ViewPropertySpringAnimator<T : View>(
         value: Float,
         velocity: Float
       ) {
-        runningAnimations.remove(property)
+        animatorMap.remove(property)
         animation?.removeEndListener(this)
 
-        if (runningAnimations.isEmpty() && !canceled) {
+        if (animatorMap.isEmpty() && !canceled) {
           animatorListener?.onAnimationEnd(this@ViewPropertySpringAnimator)
         }
       }
@@ -250,6 +250,7 @@ class ViewPropertySpringAnimator<T : View>(
 
   @MainThread
   fun start(): ViewPropertySpringAnimator<T> = apply {
+    if (pendingAnimations.isEmpty()) return@apply
     val animations = pendingAnimations.toList()
     pendingAnimations.clear()
     animatorListener?.onAnimationStart(this)
@@ -259,8 +260,8 @@ class ViewPropertySpringAnimator<T : View>(
   @MainThread
   fun cancel() {
     pendingAnimations.clear()
-    val animations = runningAnimations.values.toList()
-    runningAnimations.clear()
+    val animations = animatorMap.values.toList()
+    animatorMap.clear()
     animations.forEach { it.cancel() }
     animatorListener?.onAnimationCancel(this)
   }
@@ -268,7 +269,7 @@ class ViewPropertySpringAnimator<T : View>(
   @MainThread
   fun skipToEnd() {
     pendingAnimations.clear()
-    val animations = runningAnimations.values.toList()
+    val animations = animatorMap.values.toList()
     animations.filter { it.canSkipToEnd() }
       .forEach { it.skipToEnd() }
   }
@@ -296,13 +297,13 @@ class ViewPropertySpringAnimator<T : View>(
   }
 
   fun removeUpdateListener(listener: DynamicAnimation.OnAnimationUpdateListener) {
-    runningAnimations.forEach { (_, animation) ->
+    animatorMap.forEach { (_, animation) ->
       animation.removeUpdateListener(listener)
     }
   }
 
   fun removeEndListener(listener: DynamicAnimation.OnAnimationEndListener) {
-    runningAnimations.forEach { (_, animation) ->
+    animatorMap.forEach { (_, animation) ->
       animation.removeEndListener(listener)
     }
   }
