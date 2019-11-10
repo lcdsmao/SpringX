@@ -20,7 +20,7 @@ class ViewPropertySpringAnimator<T : View>(
   private val pendingAnimations = mutableListOf<SpringAnimationHolder>()
   private val animatorMap = mutableMapOf<FloatPropertyCompat<in T>, SpringAnimation>()
   val isRunning: Boolean
-    get() = animatorMap.isEmpty()
+    get() = animatorMap.values.any { it.isRunning }
 
   private var defaultDampingRatio: Float = SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY
   private var defaultStiffness: Float = SpringForce.STIFFNESS_MEDIUM
