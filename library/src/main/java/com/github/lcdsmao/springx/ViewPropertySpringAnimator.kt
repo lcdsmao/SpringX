@@ -215,7 +215,7 @@ class ViewPropertySpringAnimator(
       finalValue: Float,
       config: SpringAnimationConfig.() -> Unit = {}
   ) {
-    animateProperty(property, finalValue, getViewValue(property), config)
+    animateProperty(property, finalValue, property.getValue(view), config)
   }
 
   private fun animateProperty(
@@ -235,24 +235,6 @@ class ViewPropertySpringAnimator(
     config.defaultStiffness = defaultStiffness
     config.finalValueBias = finalValueBias
     pendingAnimations += SpringAnimationHolder(anim, config)
-  }
-
-  private fun getViewValue(property: DynamicAnimation.ViewProperty): Float {
-    return when (property) {
-      DynamicAnimation.TRANSLATION_X -> view.translationX
-      DynamicAnimation.TRANSLATION_Y -> view.translationY
-      DynamicAnimation.TRANSLATION_Z -> ViewCompat.getTranslationZ(view)
-      DynamicAnimation.ROTATION -> view.rotation
-      DynamicAnimation.ROTATION_X -> view.rotationX
-      DynamicAnimation.ROTATION_Y -> view.rotationY
-      DynamicAnimation.SCALE_X -> view.scaleX
-      DynamicAnimation.SCALE_Y -> view.scaleY
-      DynamicAnimation.X -> view.x
-      DynamicAnimation.Y -> view.y
-      DynamicAnimation.Z -> ViewCompat.getZ(view)
-      DynamicAnimation.ALPHA -> view.alpha
-      else -> 0f
-    }
   }
 
   private fun SpringAnimation.createEndListener(
