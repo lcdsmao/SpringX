@@ -25,7 +25,7 @@ repositories {
 And then add dependency to your module `build.gradle`:
 ```gradle
 dependencies {
-  implementation 'com.github.lcdsmao:springx:0.0.1'
+  implementation 'com.github.lcdsmao:springx:0.0.2'
 }
 ```
 
