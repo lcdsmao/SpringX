@@ -179,6 +179,22 @@ class ViewPropertySpringAnimator(
     animatePropertyBy(DynamicAnimation.ALPHA, finalValue, config)
 
   fun animateProperty(
+    finalValue: Float,
+    setter: View.(Float) -> Unit,
+    getter: View.() -> Float,
+    config: SpringAnimationConfig.() -> Unit = {}
+  ): ViewPropertySpringAnimator =
+    animateProperty(createCustomProperty(setter, getter), finalValue, config)
+
+  fun animatePropertyBy(
+    setter: View.(Float) -> Unit,
+    getter: View.() -> Float,
+    finalValue: Float,
+    config: SpringAnimationConfig.() -> Unit = {}
+  ): ViewPropertySpringAnimator =
+    animatePropertyBy(createCustomProperty(setter, getter), finalValue, config)
+
+  fun animateProperty(
     property: FloatPropertyCompat<View>,
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
@@ -290,6 +306,19 @@ class ViewPropertySpringAnimator(
   fun removeEndListener(listener: DynamicAnimation.OnAnimationEndListener) {
     runningAnimations.forEach { (_, animation) ->
       animation.removeEndListener(listener)
+    }
+  }
+
+  private fun createCustomProperty(
+    setter: View.(Float) -> Unit,
+    getter: View.() -> Float
+  ) = object : FloatPropertyCompat<View>("CustomProperty") {
+    override fun getValue(view: View): Float {
+      return getter.invoke(view)
+    }
+
+    override fun setValue(view: View, value: Float) {
+      setter.invoke(view, value)
     }
   }
 }
