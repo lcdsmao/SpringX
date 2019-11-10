@@ -210,44 +210,6 @@ class ViewPropertySpringAnimator<T : View>(
     animatePropertyInternal(property, value + property.getValue(view), config)
   }
 
-  private fun animatePropertyInternal(
-    property: FloatPropertyCompat<in T>,
-    finalValue: Float,
-    configBuilder: SpringAnimationConfig.() -> Unit = {}
-  ) {
-    var anim = animatorMap[property]
-    if (anim == null) {
-      anim = SpringAnimation(view, property)
-      anim.cleanSelfOnEnd(property)
-      animatorMap[property] = anim
-    }
-    val config = SpringAnimationConfig(finalValue).apply(configBuilder)
-    config.defaultDampingRatio = defaultDampingRatio
-    config.defaultStiffness = defaultStiffness
-    pendingAnimations += SpringAnimationHolder(anim, config)
-  }
-
-  private fun SpringAnimation.cleanSelfOnEnd(
-    property: FloatPropertyCompat<in T>
-  ) {
-    val listener = object : DynamicAnimation.OnAnimationEndListener {
-      override fun onAnimationEnd(
-        animation: DynamicAnimation<out DynamicAnimation<*>>?,
-        canceled: Boolean,
-        value: Float,
-        velocity: Float
-      ) {
-        animatorMap.remove(property)
-        animation?.removeEndListener(this)
-
-        if (animatorMap.isEmpty() && !canceled) {
-          animatorListener?.onAnimationEnd(this@ViewPropertySpringAnimator)
-        }
-      }
-    }
-    addEndListener(listener)
-  }
-
   @MainThread
   fun start(): ViewPropertySpringAnimator<T> = apply {
     if (pendingAnimations.isEmpty()) return@apply
@@ -319,5 +281,43 @@ class ViewPropertySpringAnimator<T : View>(
     override fun setValue(view: T, value: Float) {
       setter.invoke(view, value)
     }
+  }
+
+  private fun animatePropertyInternal(
+    property: FloatPropertyCompat<in T>,
+    finalValue: Float,
+    configBuilder: SpringAnimationConfig.() -> Unit = {}
+  ) {
+    var anim = animatorMap[property]
+    if (anim == null) {
+      anim = SpringAnimation(view, property)
+      anim.cleanSelfOnEnd(property)
+      animatorMap[property] = anim
+    }
+    val config = SpringAnimationConfig(finalValue).apply(configBuilder)
+    config.defaultDampingRatio = defaultDampingRatio
+    config.defaultStiffness = defaultStiffness
+    pendingAnimations += SpringAnimationHolder(anim, config)
+  }
+
+  private fun SpringAnimation.cleanSelfOnEnd(
+    property: FloatPropertyCompat<in T>
+  ) {
+    val listener = object : DynamicAnimation.OnAnimationEndListener {
+      override fun onAnimationEnd(
+        animation: DynamicAnimation<out DynamicAnimation<*>>?,
+        canceled: Boolean,
+        value: Float,
+        velocity: Float
+      ) {
+        animatorMap.remove(property)
+        animation?.removeEndListener(this)
+
+        if (animatorMap.isEmpty() && !canceled) {
+          animatorListener?.onAnimationEnd(this@ViewPropertySpringAnimator)
+        }
+      }
+    }
+    addEndListener(listener)
   }
 }
