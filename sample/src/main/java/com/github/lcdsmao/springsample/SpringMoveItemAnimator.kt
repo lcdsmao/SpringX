@@ -124,7 +124,7 @@ class SpringMoveItemAnimator : SimpleItemAnimator() {
     dispatchAnimationsFinished()
   }
 
-  private fun ViewPropertySpringAnimator.reset() = apply {
+  private fun <T : View> ViewPropertySpringAnimator<T>.reset() = apply {
     defaultDampingRatio(dampingRatio)
     defaultStiffness(stiffness)
   }
