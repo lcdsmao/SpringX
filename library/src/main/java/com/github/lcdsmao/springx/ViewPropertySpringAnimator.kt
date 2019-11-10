@@ -18,7 +18,7 @@ class ViewPropertySpringAnimator<T : View>(
   }
 
   private val pendingAnimations = mutableListOf<SpringAnimationHolder>()
-  private val runningAnimations = mutableMapOf<FloatPropertyCompat<View>, SpringAnimation>()
+  private val runningAnimations = mutableMapOf<FloatPropertyCompat<in T>, SpringAnimation>()
   val isRunning: Boolean
     get() = runningAnimations.isNotEmpty()
 
@@ -180,22 +180,22 @@ class ViewPropertySpringAnimator<T : View>(
 
   fun animateProperty(
     finalValue: Float,
-    setter: View.(Float) -> Unit,
-    getter: View.() -> Float,
+    setter: T.(Float) -> Unit,
+    getter: T.() -> Float,
     config: SpringAnimationConfig.() -> Unit = {}
   ): ViewPropertySpringAnimator<T> =
     animateProperty(createCustomProperty(setter, getter), finalValue, config)
 
   fun animatePropertyBy(
-    setter: View.(Float) -> Unit,
-    getter: View.() -> Float,
+    setter: T.(Float) -> Unit,
+    getter: T.() -> Float,
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
   ): ViewPropertySpringAnimator<T> =
     animatePropertyBy(createCustomProperty(setter, getter), finalValue, config)
 
   fun animateProperty(
-    property: FloatPropertyCompat<View>,
+    property: FloatPropertyCompat<in T>,
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
   ) = apply {
@@ -203,7 +203,7 @@ class ViewPropertySpringAnimator<T : View>(
   }
 
   fun animatePropertyBy(
-    property: FloatPropertyCompat<View>,
+    property: FloatPropertyCompat<in T>,
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
   ) = apply {
@@ -211,7 +211,7 @@ class ViewPropertySpringAnimator<T : View>(
   }
 
   private fun animateProperty(
-    property: FloatPropertyCompat<View>,
+    property: FloatPropertyCompat<in T>,
     finalValue: Float,
     finalValueBias: Float,
     configBuilder: SpringAnimationConfig.() -> Unit = {}
@@ -230,7 +230,7 @@ class ViewPropertySpringAnimator<T : View>(
   }
 
   private fun SpringAnimation.createEndListener(
-    property: FloatPropertyCompat<View>
+    property: FloatPropertyCompat<in T>
   ) {
     val listener = object : DynamicAnimation.OnAnimationEndListener {
       override fun onAnimationEnd(
@@ -310,14 +310,14 @@ class ViewPropertySpringAnimator<T : View>(
   }
 
   private fun createCustomProperty(
-    setter: View.(Float) -> Unit,
-    getter: View.() -> Float
-  ) = object : FloatPropertyCompat<View>("CustomProperty") {
-    override fun getValue(view: View): Float {
+    setter: T.(Float) -> Unit,
+    getter: T.() -> Float
+  ) = object : FloatPropertyCompat<T>("CustomProperty") {
+    override fun getValue(view: T): Float {
       return getter.invoke(view)
     }
 
-    override fun setValue(view: View, value: Float) {
+    override fun setValue(view: T, value: Float) {
       setter.invoke(view, value)
     }
   }
