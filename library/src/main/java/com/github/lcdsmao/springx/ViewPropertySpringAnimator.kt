@@ -2,7 +2,6 @@ package com.github.lcdsmao.springx
 
 import android.view.View
 import androidx.annotation.MainThread
-import androidx.core.view.ViewCompat
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
@@ -37,184 +36,160 @@ class ViewPropertySpringAnimator(
   fun x(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animateProperty(DynamicAnimation.X, finalValue, config)
-  }
 
   fun xBy(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animatePropertyBy(DynamicAnimation.X, finalValue, config)
-  }
 
   fun y(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animateProperty(DynamicAnimation.Y, finalValue, config)
-  }
 
   fun yBy(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animatePropertyBy(DynamicAnimation.Y, finalValue, config)
-  }
 
   fun z(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animateProperty(DynamicAnimation.Z, finalValue, config)
-  }
 
   fun zBy(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animatePropertyBy(DynamicAnimation.Z, finalValue, config)
-  }
 
   fun rotation(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animateProperty(DynamicAnimation.ROTATION, finalValue, config)
-  }
 
   fun rotationBy(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animatePropertyBy(DynamicAnimation.ROTATION, finalValue, config)
-  }
 
   fun rotationX(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animateProperty(DynamicAnimation.ROTATION_X, finalValue, config)
-  }
 
   fun rotationXBy(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animatePropertyBy(DynamicAnimation.ROTATION_X, finalValue, config)
-  }
 
   fun rotationY(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animateProperty(DynamicAnimation.ROTATION_Y, finalValue, config)
-  }
 
   fun rotationYBy(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animatePropertyBy(DynamicAnimation.ROTATION_Y, finalValue, config)
-  }
 
   fun translationX(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animateProperty(DynamicAnimation.TRANSLATION_X, finalValue, config)
-  }
 
   fun translationXBy(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animatePropertyBy(DynamicAnimation.TRANSLATION_X, finalValue, config)
-  }
 
   fun translationY(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animateProperty(DynamicAnimation.TRANSLATION_Y, finalValue, config)
-  }
 
   fun translationYBy(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animatePropertyBy(DynamicAnimation.TRANSLATION_Y, finalValue, config)
-  }
 
   fun translationZ(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animateProperty(DynamicAnimation.TRANSLATION_Z, finalValue, config)
-  }
 
   fun translationZBy(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animatePropertyBy(DynamicAnimation.TRANSLATION_Z, finalValue, config)
-  }
 
   fun scaleX(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animateProperty(DynamicAnimation.SCALE_X, finalValue, config)
-  }
 
   fun scaleXBy(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animatePropertyBy(DynamicAnimation.SCALE_X, finalValue, config)
-  }
 
   fun scaleY(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animateProperty(DynamicAnimation.SCALE_Y, finalValue, config)
-  }
 
   fun scaleYBy(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animatePropertyBy(DynamicAnimation.SCALE_Y, finalValue, config)
-  }
 
   fun alpha(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animateProperty(DynamicAnimation.ALPHA, finalValue, config)
-  }
 
   fun alphaBy(
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ): ViewPropertySpringAnimator = apply {
+  ): ViewPropertySpringAnimator =
     animatePropertyBy(DynamicAnimation.ALPHA, finalValue, config)
-  }
 
-  private fun animateProperty(
+  fun animateProperty(
     property: DynamicAnimation.ViewProperty,
     finalValue: Float,
     config: SpringAnimationConfig.() -> Unit = {}
-  ) {
+  ) = apply {
     animateProperty(property, finalValue, 0f, config)
   }
 
-  private fun animatePropertyBy(
-      property: DynamicAnimation.ViewProperty,
-      finalValue: Float,
-      config: SpringAnimationConfig.() -> Unit = {}
-  ) {
+  fun animatePropertyBy(
+    property: DynamicAnimation.ViewProperty,
+    finalValue: Float,
+    config: SpringAnimationConfig.() -> Unit = {}
+  ) = apply {
     animateProperty(property, finalValue, property.getValue(view), config)
   }
 
