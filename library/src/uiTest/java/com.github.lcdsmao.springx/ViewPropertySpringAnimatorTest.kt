@@ -148,6 +148,20 @@ abstract class ViewPropertySpringAnimatorTest : UiTest {
     Truth.assertThat(property.getValue(animView)).isEqualTo(50f + 100f)
   }
 
+  @Test
+  fun testAnimatorReuse() {
+    val anim1 = animView.spring().translationX(-100f)
+    val listener = mockk<ViewPropertySpringAnimator.AnimatorListener<View>>(relaxed = true)
+    anim1.setListener(listener)
+    val anim2 = animView.spring().translationX(100f)
+    Truth.assertThat(anim1).isSameAs(anim2)
+
+    runOnMainThread { anim2.start() }
+    runOnMainThread { anim1.skipToEnd() }
+    verify(exactly = 1, timeout = 1000) { listener.onAnimationEnd(anim1) }
+    Truth.assertThat(animView.translationX).isEqualTo(100f)
+  }
+
   private fun <T : View> ViewPropertySpringAnimator<T>.animate(
     property: DynamicAnimation.ViewProperty,
     value: Float,
