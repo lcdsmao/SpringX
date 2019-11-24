@@ -193,6 +193,34 @@ abstract class ViewPropertySpringAnimatorTest : UiTest {
     }
   }
 
+  @Test
+  @Ignore("Fix the implementation of [ViewPropertySpringAnimator] to let this test pass")
+  fun testStiffness() {
+    val onEnd = mockk<(Int) -> Unit>(relaxed = true)
+    val anim = animView.spring()
+      .defaultStiffness(SpringForce.STIFFNESS_HIGH)
+      .rotation(100f) {
+        stiffness = SpringForce.STIFFNESS_MEDIUM
+        onEnd { _, _, _, _ -> onEnd.invoke(2) }
+      }
+      .translationY(100f) {
+        stiffness = SpringForce.STIFFNESS_LOW
+        onEnd { _, _, _, _ -> onEnd.invoke(1) }
+      }
+      .translationX(100f) {
+        onEnd { _, _, _, _ -> onEnd.invoke(0) }
+      }
+      .setListener(onEnd = { onEnd.invoke(3) })
+    runOnMainThread { anim.start() }
+    verify(exactly = 4, timeout = 1000L) { onEnd.invoke(any()) }
+    verifySequence {
+      onEnd.invoke(0)
+      onEnd.invoke(1)
+      onEnd.invoke(2)
+      onEnd.invoke(3)
+    }
+  }
+
   private fun <T : View> ViewPropertySpringAnimator<T>.animate(
     property: DynamicAnimation.ViewProperty,
     value: Float,
