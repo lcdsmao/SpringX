@@ -3,11 +3,14 @@ package com.github.lcdsmao.springx
 import android.view.View
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.FloatPropertyCompat
+import androidx.dynamicanimation.animation.SpringForce
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.google.common.truth.Truth
 import io.mockk.mockk
 import io.mockk.verify
+import io.mockk.verifySequence
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
@@ -160,6 +163,34 @@ abstract class ViewPropertySpringAnimatorTest : UiTest {
     runOnMainThread { anim1.skipToEnd() }
     verify(exactly = 1, timeout = 1000) { listener.onAnimationEnd(anim1) }
     Truth.assertThat(animView.translationX).isEqualTo(100f)
+  }
+
+  @Test
+  @Ignore("Fix the implementation of [ViewPropertySpringAnimator] to let this test pass")
+  fun testDampingRatio() {
+    val onEnd = mockk<(Int) -> Unit>(relaxed = true)
+    val anim = animView.spring()
+      .defaultDampingRatio(SpringForce.DAMPING_RATIO_NO_BOUNCY)
+      .rotation(100f) {
+        dampingRatio = SpringForce.DAMPING_RATIO_HIGH_BOUNCY
+        onEnd { _, _, _, _ -> onEnd.invoke(2) }
+      }
+      .translationY(100f) {
+        dampingRatio = SpringForce.DAMPING_RATIO_LOW_BOUNCY
+        onEnd { _, _, _, _ -> onEnd.invoke(1) }
+      }
+      .translationX(100f) {
+        onEnd { _, _, _, _ -> onEnd.invoke(0) }
+      }
+      .setListener(onEnd = { onEnd.invoke(3) })
+    runOnMainThread { anim.start() }
+    verify(exactly = 4, timeout = 1000L) { onEnd.invoke(any()) }
+    verifySequence {
+      onEnd.invoke(0)
+      onEnd.invoke(1)
+      onEnd.invoke(2)
+      onEnd.invoke(3)
+    }
   }
 
   private fun <T : View> ViewPropertySpringAnimator<T>.animate(
