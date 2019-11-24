@@ -14,11 +14,15 @@ buildscript {
         constraintlayout_version = '2.0.0-beta3'
         dynamicanimation_version = '1.0.0'
         navigation_version = '2.1.0'
+        espresso_version = '3.2.0'
+        robolectric_version = '4.3.1'
+        androidxtest_version = '1.2.0'
+        androidxtest_junit_version = '1.1.1'
+        mockk_version = '1.9.3'
     }
     repositories {
         google()
         jcenter()
-        
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.2'
@@ -33,6 +37,11 @@ allprojects {
     repositories {
         google()
         jcenter()
+    }
+    configurations.all {
+        resolutionStrategy {
+            force("org.objenesis:objenesis:2.6")
+        }
     }
 }
 
