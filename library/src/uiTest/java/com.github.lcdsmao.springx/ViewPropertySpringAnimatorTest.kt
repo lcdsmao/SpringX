@@ -2,6 +2,7 @@ package com.github.lcdsmao.springx
 
 import android.view.View
 import androidx.dynamicanimation.animation.DynamicAnimation
+import androidx.dynamicanimation.animation.FloatPropertyCompat
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.google.common.truth.Truth
 import io.mockk.mockk
@@ -89,6 +90,62 @@ abstract class ViewPropertySpringAnimatorTest : UiTest {
       Truth.assertThat(anim.isRunning).isFalse()
       Truth.assertThat(p.getValue(animView)).isEqualTo(oldValue + v)
     }
+  }
+
+  @Test
+  fun testAnimateCustomProperty() {
+    val property = object : FloatPropertyCompat<View>("Custom") {
+
+      private var value = 50f
+
+      override fun getValue(view: View): Float {
+        return value
+      }
+
+      override fun setValue(view: View, value: Float) {
+        this.value = value
+      }
+    }
+    val listener = mockk<ViewPropertySpringAnimator.AnimatorListener<View>>(relaxed = true)
+    val anim = ViewPropertySpringAnimator(animView).animateProperty(property, 100f)
+      .setListener(listener)
+    runOnMainThread {
+      anim.start()
+      Truth.assertThat(anim.isRunning).isTrue()
+      anim.skipToEnd()
+    }
+    verify(exactly = 1) { listener.onAnimationStart(anim) }
+    verify(exactly = 1, timeout = 1000) { listener.onAnimationEnd(anim) }
+    Truth.assertThat(anim.isRunning).isFalse()
+    Truth.assertThat(property.getValue(animView)).isEqualTo(100f)
+  }
+
+  @Test
+  fun testAnimateByCustomProperty() {
+    val property = object : FloatPropertyCompat<View>("Custom") {
+
+      private var value = 50f
+
+      override fun getValue(view: View): Float {
+        return value
+      }
+
+      override fun setValue(view: View, value: Float) {
+        this.value = value
+      }
+    }
+    val listener = mockk<ViewPropertySpringAnimator.AnimatorListener<View>>(relaxed = true)
+    val anim = ViewPropertySpringAnimator(animView).animatePropertyBy(property, 100f)
+      .setListener(listener)
+    runOnMainThread {
+      anim.start()
+      Truth.assertThat(anim.isRunning).isTrue()
+      anim.skipToEnd()
+    }
+    verify(exactly = 1) { listener.onAnimationStart(anim) }
+    verify(exactly = 1, timeout = 1000) { listener.onAnimationEnd(anim) }
+    Truth.assertThat(anim.isRunning).isFalse()
+    Truth.assertThat(property.getValue(animView)).isEqualTo(50f + 100f)
   }
 
   private fun <T : View> ViewPropertySpringAnimator<T>.animate(
