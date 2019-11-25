@@ -61,6 +61,7 @@ dependencies {
     androidTestImplementation "androidx.test.ext:truth:$androidxtest_version"
     androidTestImplementation "androidx.test.ext:junit:$androidxtest_junit_version"
     androidTestImplementation "androidx.test:runner:$androidxtest_version"
+    androidTestImplementation "org.robolectric:annotations:$robolectric_version"
     androidTestImplementation "io.mockk:mockk-android:$mockk_version"
 }
 

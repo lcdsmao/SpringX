@@ -5,6 +5,7 @@ import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.FloatPropertyCompat
 import androidx.dynamicanimation.animation.SpringForce
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth
 import io.mockk.mockk
 import io.mockk.verify
@@ -13,8 +14,12 @@ import org.junit.Before
 import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.annotation.LooperMode
 
-abstract class ViewPropertySpringAnimatorTest : UiTest {
+@RunWith(AndroidJUnit4::class)
+@LooperMode(LooperMode.Mode.PAUSED)
+class ViewPropertySpringAnimatorTest {
 
   @get:Rule
   val activityRule = ActivityScenarioRule<AnimationActivity>(AnimationActivity::class.java)
