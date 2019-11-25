@@ -33,3 +33,24 @@ jobs:
         java-version: 1.8
     - name: Run unit test
       run: ./gradlew :library:testDebugUnitTest
+  
+  ui_test:
+    needs: [build]
+    runs-on: macOS-latest
+    strategy:
+      matrix:
+        api-level: [21, 23, 28]
+        target: [default]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run instrumented test
+      uses: reactivecircus/android-emulator-runner@v1
+      with:
+        api-level: ${{ matrix.api-level }}
+        target: ${{ matrix.target }}
+        arch: x86_64
+        profile: Nexus 6
+        headless: true
+        disable-animations: false
+        script: ./gradlew connectedCheck
