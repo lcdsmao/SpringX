@@ -34,12 +34,13 @@ jobs:
     - name: Run unit test
       run: ./gradlew :library:testDebugUnitTest
   
-  ui_test:
+  android_test:
     needs: [build]
     runs-on: macOS-latest
     strategy:
       matrix:
-        api-level: [21, 23, 28]
+        # Waiting mockk fix of verify(timeout = ...) with API < 24
+        api-level: [24, 28]
         target: [default]
 
     steps:
@@ -53,4 +54,4 @@ jobs:
         profile: Nexus 6
         headless: true
         disable-animations: false
-        script: ./gradlew connectedCheck
+        script: ./gradlew :library:connectedCheck
