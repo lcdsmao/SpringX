@@ -161,10 +161,12 @@ class ViewPropertySpringAnimatorTest {
     val anim1 = animView.spring().translationX(-100f)
     val listener = mockk<ViewPropertySpringAnimator.AnimatorListener<View>>(relaxed = true)
     anim1.setListener(listener)
+    runOnMainSync { anim1.start() }
+
     val anim2 = animView.spring().translationX(100f)
+    runOnMainSync { anim2.start() }
     Truth.assertThat(anim1).isSameAs(anim2)
 
-    runOnMainSync { anim2.start() }
     runOnMainSync { anim1.skipToEnd() }
     verify(exactly = 1, timeout = 1000) { listener.onAnimationEnd(anim1) }
     Truth.assertThat(animView.translationX).isEqualTo(100f)
