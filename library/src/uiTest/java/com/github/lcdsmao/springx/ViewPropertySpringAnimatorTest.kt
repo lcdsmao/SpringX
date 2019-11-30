@@ -34,7 +34,7 @@ class ViewPropertySpringAnimatorTest {
   }
 
   @Test
-  fun testAnimateCommonProperty() {
+  fun testAnimateCommonProperty() = runUiTest {
     val cases = listOf(
       DynamicAnimation.X to 100f,
       DynamicAnimation.Y to -100f,
@@ -54,7 +54,7 @@ class ViewPropertySpringAnimatorTest {
       val listener = mockk<ViewPropertySpringAnimator.AnimatorListener<View>>(relaxed = true)
       val anim = ViewPropertySpringAnimator(animView).animate(p, v, false)
         .setListener(listener)
-      runOnMainThread {
+      runOnMainSync {
         anim.start()
         Truth.assertThat(anim.isRunning).isTrue()
         anim.skipToEnd()
@@ -67,7 +67,7 @@ class ViewPropertySpringAnimatorTest {
   }
 
   @Test
-  fun testAnimateByCommonProperty() {
+  fun testAnimateByCommonProperty() = runUiTest {
     val cases = listOf(
       DynamicAnimation.X to 100f,
       DynamicAnimation.Y to -100f,
@@ -88,7 +88,7 @@ class ViewPropertySpringAnimatorTest {
       val listener = mockk<ViewPropertySpringAnimator.AnimatorListener<View>>(relaxed = true)
       val anim = ViewPropertySpringAnimator(animView).animate(p, v, true)
         .setListener(listener)
-      runOnMainThread {
+      runOnMainSync {
         anim.start()
         Truth.assertThat(anim.isRunning).isTrue()
         anim.skipToEnd()
@@ -101,7 +101,7 @@ class ViewPropertySpringAnimatorTest {
   }
 
   @Test
-  fun testAnimateCustomProperty() {
+  fun testAnimateCustomProperty() = runUiTest {
     val property = object : FloatPropertyCompat<View>("Custom") {
 
       private var value = 50f
@@ -117,7 +117,7 @@ class ViewPropertySpringAnimatorTest {
     val listener = mockk<ViewPropertySpringAnimator.AnimatorListener<View>>(relaxed = true)
     val anim = ViewPropertySpringAnimator(animView).animateProperty(property, 100f)
       .setListener(listener)
-    runOnMainThread {
+    runOnMainSync {
       anim.start()
       Truth.assertThat(anim.isRunning).isTrue()
       anim.skipToEnd()
@@ -129,7 +129,7 @@ class ViewPropertySpringAnimatorTest {
   }
 
   @Test
-  fun testAnimateByCustomProperty() {
+  fun testAnimateByCustomProperty() = runUiTest {
     val property = object : FloatPropertyCompat<View>("Custom") {
 
       private var value = 50f
@@ -145,7 +145,7 @@ class ViewPropertySpringAnimatorTest {
     val listener = mockk<ViewPropertySpringAnimator.AnimatorListener<View>>(relaxed = true)
     val anim = ViewPropertySpringAnimator(animView).animatePropertyBy(property, 100f)
       .setListener(listener)
-    runOnMainThread {
+    runOnMainSync {
       anim.start()
       Truth.assertThat(anim.isRunning).isTrue()
       anim.skipToEnd()
@@ -157,22 +157,22 @@ class ViewPropertySpringAnimatorTest {
   }
 
   @Test
-  fun testAnimatorReuse() {
+  fun testAnimatorReuse() = runUiTest {
     val anim1 = animView.spring().translationX(-100f)
     val listener = mockk<ViewPropertySpringAnimator.AnimatorListener<View>>(relaxed = true)
     anim1.setListener(listener)
     val anim2 = animView.spring().translationX(100f)
     Truth.assertThat(anim1).isSameAs(anim2)
 
-    runOnMainThread { anim2.start() }
-    runOnMainThread { anim1.skipToEnd() }
+    runOnMainSync { anim2.start() }
+    runOnMainSync { anim1.skipToEnd() }
     verify(exactly = 1, timeout = 1000) { listener.onAnimationEnd(anim1) }
     Truth.assertThat(animView.translationX).isEqualTo(100f)
   }
 
   @Test
   @Ignore("Fix the implementation of [ViewPropertySpringAnimator] to let this test pass")
-  fun testDampingRatio() {
+  fun testDampingRatio() = runUiTest {
     val onEnd = mockk<(Int) -> Unit>(relaxed = true)
     val anim = animView.spring()
       .defaultDampingRatio(SpringForce.DAMPING_RATIO_NO_BOUNCY)
@@ -188,7 +188,7 @@ class ViewPropertySpringAnimatorTest {
         onEnd { _, _, _, _ -> onEnd.invoke(0) }
       }
       .setListener(onEnd = { onEnd.invoke(3) })
-    runOnMainThread { anim.start() }
+    runOnMainSync { anim.start() }
     verify(exactly = 4, timeout = 1000L) { onEnd.invoke(any()) }
     verifySequence {
       onEnd.invoke(0)
@@ -200,7 +200,7 @@ class ViewPropertySpringAnimatorTest {
 
   @Test
   @Ignore("Fix the implementation of [ViewPropertySpringAnimator] to let this test pass")
-  fun testStiffness() {
+  fun testStiffness() = runUiTest {
     val onEnd = mockk<(Int) -> Unit>(relaxed = true)
     val anim = animView.spring()
       .defaultStiffness(SpringForce.STIFFNESS_HIGH)
@@ -216,7 +216,7 @@ class ViewPropertySpringAnimatorTest {
         onEnd { _, _, _, _ -> onEnd.invoke(0) }
       }
       .setListener(onEnd = { onEnd.invoke(3) })
-    runOnMainThread { anim.start() }
+    runOnMainSync { anim.start() }
     verify(exactly = 4, timeout = 1000L) { onEnd.invoke(any()) }
     verifySequence {
       onEnd.invoke(0)
